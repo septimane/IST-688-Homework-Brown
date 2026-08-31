@@ -69,10 +69,18 @@ else:
             ]
 
             # Generate an answer using the OpenAI API and stream it.
-            stream = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                stream=True,
-            )
-
-            st.write_stream(stream)
+            try:
+                stream = client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    stream=True,
+                )
+                st.write_stream(stream)
+            except Exception as e:
+                st.error(f"That model could not be reached: {e}")
+                if model == "gpt-5-chat-latest":
+                    st.info(
+                        "gpt-5-chat-latest was retired in OpenAI's August 10, 2026 "
+                        "deprecation round, so it is no longer available through the API. "
+                        "Pick another model from the dropdown."
+                    )
