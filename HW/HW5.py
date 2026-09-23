@@ -2,7 +2,6 @@ import json
 import os
 import sys
 
-# ChromaDB needs a newer sqlite3 than Streamlit Cloud ships with.
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 
@@ -110,11 +109,9 @@ if prompt := st.chat_input("Ask about a club"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Short term memory: the last 5 interactions.
     buffer = st.session_state.hw5_messages[-(BUFFER_TURNS * 2):]
     messages = [{"role": "system", "content": SYSTEM_PROMPT}] + buffer
 
-    # First call. The model decides whether it needs to search, and what to search for.
     first = client.chat.completions.create(
         model=MODEL,
         messages=messages,
@@ -150,7 +147,6 @@ if prompt := st.chat_input("Ask about a club"):
             "content": json.dumps(results),
         })
 
-        # Second call. No tools passed, so it must answer from what it got back.
         with st.chat_message("assistant"):
             stream = client.chat.completions.create(
                 model=MODEL,
