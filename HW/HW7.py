@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-# ChromaDB needs a newer sqlite3 than Streamlit Cloud ships with.
+
 __import__("pysqlite3")
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 
@@ -23,9 +23,8 @@ DB_DIR = os.path.join(HERE, "HW7_ChromaDB")
 COLLECTION_NAME = "HW7Collection"
 BUFFER_TURNS = 5
 
-# Requirement 1b. "Interesting" is a judgment, not a search term, so it needs an
-# explicit definition. A law firm monitoring clients cares about legal and
-# commercial exposure, not product launches.
+and
+
 INTERESTING_CRITERIA = """A story is "interesting" to this law firm when it signals legal
 or commercial exposure for a client. In rough priority order:
 
@@ -37,8 +36,7 @@ or commercial exposure for a client. In rough priority order:
 Product launches, earnings beats and routine partnerships rank low unless they carry
 one of the above."""
 
-# The standing query used to pull candidates for ranking. Vector search cannot judge
-# importance, so this describes what importance looks like in article language.
+
 INTERESTING_QUERY = (
     "lawsuit litigation legal action court filing settlement regulatory investigation "
     "antitrust probe subpoena fine penalty data breach security incident class action "
